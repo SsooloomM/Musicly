@@ -1,3 +1,4 @@
+from DB import DB
 class Songs:
     class Song:
         def __init__(self, song):
@@ -23,15 +24,30 @@ class Songs:
 
     
     songs = []
+    db = DB.get_instance()
+
     
     @classmethod
-    def get_songs(cls, db):
+    def get_songs(cls):
         cls.songs = []
-        songs = db.select_all("song")
+        songs = cls.db.select_all("song")
         for song in songs:
             cls.songs.append(cls.Song(song))
-    
+
     @classmethod
     def view_songs(cls):
         for song in cls.songs:
             print(song)
+
+    @classmethod
+    def add_song(cls,*data):
+        cls.db.add_song(*data)
+        cls.get_songs()
+
+    @classmethod
+    def delete_song(cls,id):
+        cls.db.delete_song(id)
+        cls.get_songs()
+
+
+

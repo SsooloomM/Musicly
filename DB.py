@@ -29,24 +29,48 @@ class DB:
         self.conn.commit()
     
     def delete_playlist(self , id):
-        query = "DELETE FROM playlist WHERE playlist_id = %i"%(id)
+        query = "DELETE FROM playlist WHERE playlist_id = %i"%id
         self.conn.execute(query)
         self.conn.commit()
 
-    
     def add_artist(self, *data):
         query = "INSERT INTO artist (name, date_of_birth, band_id) VALUES(?, ?, ?)"
         self.conn.execute(query, data)
+        self.conn.commit()
+
+    def delete_artist(self,id):
+        query = "DELETE FROM artist WHERE artist_id = %i"%(id)
+        self.conn.execute(query)
+        self.conn.commit()
+
+    def add_album(self, *data):
+        query = "INSERT INTO album (title , number_of_songs ,band_id , artist_id) VALUES (? , ? , ?, ?)"
+        self.conn.execute(query, data)
+        self.conn.commit()
+
+    def delete_album(self,id):
+        query = "DELETE FROM album WHERE album_id = %i"%(id)
+        self.conn.execute(query)
         self.conn.commit()
 
     def add_band(self, *data):
         query = "INSERT INTO band (name) VALUES(?)"
         self.conn.execute(query, data)
         self.conn.commit()
+
+    def delete_band(self,id):
+        query = "DELETE FROM band WHERE band_id = %i"%(id)
+        self.conn.execute(query)
+        self.conn.commit()
     
     def add_song(self, *data):
         query = "INSERT INTO song (name, release_data, genres, lyrics, length) VALUES(?, ?, ?, ?, ?)"
         self.conn.execute(query, data)
+        self.conn.commit()
+
+    def delete_song(self,id):
+        query = "DELETE FROM song WHERE song_id = %i"%(id)
+        self.conn.execute(query)
         self.conn.commit()
 
     def select_all(self, table_name):
